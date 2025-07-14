@@ -11,6 +11,10 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-
+  #bookstore:
+  #  image: bookstore
+  #  container_name: bookstore-app
+  #  tty: true
+  #  stdin_open: true
 volumes:
   db_data:
