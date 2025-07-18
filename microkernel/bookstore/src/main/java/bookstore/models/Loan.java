@@ -6,7 +6,7 @@ public class Loan {
     private Book book;
     private LocalDate loanDate;
     private LocalDate returnDate;
-    private Person client;
+    private User client;
     private boolean isReturned;
 
     public String getLoanId() {
@@ -41,11 +41,11 @@ public class Loan {
         this.returnDate = returnDate;
     }
 
-    public Person getClient() {
+    public User getClient() {
         return client;
     }
 
-    public void setClient(Person client) {
+    public void setClient(User client) {
         this.client = client;
     }
 
