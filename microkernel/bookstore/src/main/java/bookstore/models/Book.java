@@ -5,16 +5,16 @@ public class Book {
     private String isbn;
     private String title;
     private String author;
-    private String year;
-    private int available;
+    private int publishedYear;
+    private int copiesAvailable;
 
-    public Book(Integer bookId, String title, String author, String isbn, String year, int available) {
+    public Book(Integer bookId, String title, String author, String isbn, int publishedYear, int copiesAvailable) {
         this.bookId = bookId;
         this.isbn = isbn;
         this.title = title;
         this.author = author;
-        this.year = year;
-        this.available = available; 
+        this.publishedYear = publishedYear;
+        this.copiesAvailable = copiesAvailable;
     }
     
     public Book() {
@@ -52,19 +52,19 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public String getYear() {
-        return year;
+    public int getPublishedYear() {
+        return publishedYear;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setPublishedYear(int publishedYear) {
+        this.publishedYear = publishedYear;
     }
 
-    public int getAvailable() {
-        return available;
+    public int getCopiesAvailable() {
+        return copiesAvailable;
     }
 
-    public void setAvailable(int available) {
-        this.available = available;
+    public void setCopiesAvailable(int copiesAvailable) {
+        this.copiesAvailable = copiesAvailable;
     }
 }
