@@ -16,6 +16,6 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>17</version>
-        </dependency>
+        </dependency>        
     </dependencies>
 </project>

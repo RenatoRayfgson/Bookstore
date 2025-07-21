@@ -1,8 +1,0 @@
-bookstore\utils\LoanManager.class
-bookstore\Main.class
-bookstore\utils\BookManager.class
-bookstore\utils\PersonManager.class
-bookstore\models\User.class
-bookstore\models\Loan.class
-bookstore\models\Book.class
-bookstore\utils\DBConnector.class
