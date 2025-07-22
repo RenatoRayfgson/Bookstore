@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -8,18 +7,10 @@
         <groupId>br.edu.ifba.inf008</groupId>
         <artifactId>parent-project</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath> </parent>
+        <relativePath>../..</relativePath>
+    </parent>
 
-    <artifactId>user-management-plugin</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>User Management Plugin</name>
-    <packaging>jar</packaging>
-
-    <properties>
-        <maven.compiler.source>24</maven.compiler.source>
-        <maven.compiler.target>24</maven.compiler.target>
-        <javafx.version>21</javafx.version>
-    </properties>
+    <artifactId>userplugin</artifactId>
 
     <dependencies>
         <dependency>
@@ -27,67 +18,20 @@
             <artifactId>interfaces</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
-        <dependency>
-            <groupId>bookstore</groupId>
-            <artifactId>bookstore</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>${javafx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>${javafx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-graphics</artifactId>
-            <version>${javafx.version}</version>
-            <classifier>win</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-graphics</artifactId>
-            <version>${javafx.version}</version>
-            <classifier>linux</classifier>
-        </dependency>
-         <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-graphics</artifactId>
-            <version>${javafx.version}</version>
-            <classifier>mac</classifier>
-        </dependency>
-
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Configure maven-jar-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.2.0</version>
                 <configuration>
-                    <outputDirectory>${project.parent.basedir}/plugins</outputDirectory>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
+                    <!-- Change the output directory -->
+                    <outputDirectory>${project.basedir}/../</outputDirectory>
+                    <!-- Change the JAR file name -->
+                    <finalName>UserPlugin</finalName>
                 </configuration>
             </plugin>
         </plugins>
