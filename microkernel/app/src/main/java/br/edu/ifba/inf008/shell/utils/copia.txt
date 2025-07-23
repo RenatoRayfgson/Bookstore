@@ -1,7 +1,0 @@
-1) Gerar Plugins
-2) Implementar os Plugins
-3) Gerar Interface
-4) Implementar interface
-
-
-Socorro
