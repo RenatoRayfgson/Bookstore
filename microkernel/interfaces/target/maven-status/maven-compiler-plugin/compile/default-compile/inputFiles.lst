@@ -1,6 +1,10 @@
-C:\Users\rrayf\OneDrive\Documentos\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\IAuthenticationController.java
-C:\Users\rrayf\OneDrive\Documentos\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\ICore.java
-C:\Users\rrayf\OneDrive\Documentos\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\IIOController.java
-C:\Users\rrayf\OneDrive\Documentos\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\IPlugin.java
-C:\Users\rrayf\OneDrive\Documentos\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\IPluginController.java
-C:\Users\rrayf\OneDrive\Documentos\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\IUIController.java
+C:\Users\Renato\Documents\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\IAuthenticationController.java
+C:\Users\Renato\Documents\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\ICore.java
+C:\Users\Renato\Documents\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\IIOController.java
+C:\Users\Renato\Documents\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\IPlugin.java
+C:\Users\Renato\Documents\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\IPluginController.java
+C:\Users\Renato\Documents\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\IUIController.java
+C:\Users\Renato\Documents\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\IUserPlugin.java
+C:\Users\Renato\Documents\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\models\Book.java
+C:\Users\Renato\Documents\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\models\Loan.java
+C:\Users\Renato\Documents\GitHub\Bookstore\microkernel\interfaces\src\main\java\br\edu\ifba\inf008\interfaces\models\User.java

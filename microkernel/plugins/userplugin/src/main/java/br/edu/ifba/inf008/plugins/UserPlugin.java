@@ -22,5 +22,5 @@ public class UserPlugin implements IPlugin
         uiController.createTab("new tab 2", new Rectangle(200,200, Color.LIGHTSTEELBLUE));
 
         return true;
-    }
+    }    
 }
