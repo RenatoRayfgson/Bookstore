@@ -1,8 +1,7 @@
-package br.edu.ifba.inf008.shell;
+package br.edu.ifba.inf008.plugins.ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.ServiceLoader;
 
 import br.edu.ifba.inf008.interfaces.IUserPlugin;
 import br.edu.ifba.inf008.interfaces.models.User;
@@ -67,17 +66,17 @@ public class UserViewController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.userPlugin = ServiceLoader.load(IUserPlugin.class).findFirst().orElse(null);
-        if(this.userPlugin == null){
-            displayAlert("Error", "User plugin not found.");
-            return;
-        }
+        
         IdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         EmailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         UsersTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> fillFieldsWithUser(newValue));
+        
+    }
 
+    public void setUserPlugin(IUserPlugin plugin) {
+        this.userPlugin = plugin;
         refreshTable();
     }
 

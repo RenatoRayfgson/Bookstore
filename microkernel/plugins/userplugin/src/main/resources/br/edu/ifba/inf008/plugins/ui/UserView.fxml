@@ -7,7 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.inf008.app.controller.UsuarioViewController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.inf008.plugins.ui.UserViewController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -51,14 +51,14 @@
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
             <TextField fx:id="txtId" layoutX="33.0" layoutY="108.0" />
-            <TextField fx:id="txtNome" layoutX="33.0" layoutY="156.0" />
+            <TextField fx:id="txtName" layoutX="33.0" layoutY="163.0" />
             <TextField fx:id="txtEmail" layoutX="34.0" layoutY="214.0" />
             <Label layoutX="42.0" layoutY="112.0" prefHeight="17.0" prefWidth="137.0" text="Id" />
-            <Label layoutX="42.0" layoutY="160.0" prefHeight="17.0" prefWidth="137.0" text="Name" />
+            <Label layoutX="39.0" layoutY="167.0" prefHeight="17.0" prefWidth="137.0" text="Name" />
             <Label layoutX="39.0" layoutY="218.0" prefHeight="17.0" prefWidth="137.0" text="Email" />
-            <Button fx:id="CreateButton" layoutX="14.0" layoutY="277.0" mnemonicParsing="false" text="Create" />
-            <Button fx:id="UpdateButton" layoutX="82.0" layoutY="277.0" mnemonicParsing="false" text="Update" />
-            <Button fx:id="DeleteButton" layoutX="146.0" layoutY="277.0" mnemonicParsing="false" text="Delete" />
+            <Button fx:id="CreateButton" layoutX="17.0" layoutY="277.0" mnemonicParsing="false" onAction="#CreateButtonAction" text="Create" />
+            <Button fx:id="UpdateButton" layoutX="80.0" layoutY="277.0" mnemonicParsing="false" onAction="#UpdateButtonAction" text="Update" />
+            <Button fx:id="DeleteButton" layoutX="146.0" layoutY="277.0" mnemonicParsing="false" onAction="#DeleteButtonAction" text="Delete" />
             <TableView fx:id="UsersTable" layoutX="272.0" layoutY="47.0" prefHeight="314.0" prefWidth="336.0">
               <columns>
                 <TableColumn fx:id="IdColumn" prefWidth="45.0" text="ID" />

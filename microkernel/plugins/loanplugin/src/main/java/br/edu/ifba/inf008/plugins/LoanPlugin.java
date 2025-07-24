@@ -14,12 +14,12 @@ public class LoanPlugin implements IPlugin
     public boolean init() {
         IUIController uiController = ICore.getInstance().getUIController();
 
-        MenuItem menuItem = uiController.createMenuItem("Menu 3", "My Menu Item");
+        MenuItem menuItem = uiController.createMenuItem("Loan", "Loan Management");
         menuItem.setOnAction((ActionEvent e) -> { //Linha antiga: menuItem.setOnAction(new EventHandler<ActionEvent>()
             System.out.println("I've been clicked!");
         });
 
-        uiController.createTab("new tab 3", new Rectangle(200,200, Color.LIGHTSTEELBLUE));
+        uiController.createTab("Loan", new Rectangle(200,200, Color.LIGHTSTEELBLUE));
 
         return true;
     }
