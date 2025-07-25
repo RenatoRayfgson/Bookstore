@@ -36,29 +36,22 @@ public class UIController extends Application implements IUIController
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Bookstore Manager");
-
-        // 1. Usaremos um BorderPane como layout principal
+        
         mainLayout = new BorderPane();
-
-        // 2. O MenuBar vai para a parte de CIMA (TOP) do BorderPane
+        
         menuBar = new MenuBar();
         mainLayout.setTop(menuBar);
-
-        // 3. (Opcional) Podemos colocar um painel de boas-vindas no CENTRO inicialmente
-        // Label welcomeLabel = new Label("Bem-vindo! Selecione uma opção no menu.");
-        // mainLayout.setCenter(welcomeLabel);
 
         Scene scene = new Scene(mainLayout, 960, 600);
 
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        // Isso continua igual, para carregar os plugins
+        
         Core.getInstance().getPluginController().init();
     }
 
     public MenuItem createMenuItem(String menuText, String menuItemText) {
-        // Criar o menu caso ele nao exista
+        
         Menu newMenu = null;
         for (Menu menu : menuBar.getMenus()) {
             if (menu.getText() == menuText) {
@@ -70,8 +63,7 @@ public class UIController extends Application implements IUIController
             newMenu = new Menu(menuText);
             menuBar.getMenus().add(newMenu);
         }
-
-        // Criar o menu item neste menu
+        
         MenuItem menuItem = new MenuItem(menuItemText);
         newMenu.getItems().add(menuItem);
 

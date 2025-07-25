@@ -7,9 +7,11 @@ public class AuthenticationController implements IAuthenticationController
     public boolean signIn(String username, String password) {
         return true;
     }
+    
     public boolean signOut() {
         return true;
     }
+    
     public boolean signUp(String username, String password) {
         return true;
     }
