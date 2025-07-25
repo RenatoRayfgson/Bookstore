@@ -2,12 +2,14 @@ package br.edu.ifba.inf008.interfaces.models;
 import java.time.LocalDate;
 
 public class Book {
-    private Integer bookId;
+    private Integer bookId; //Important
     private String isbn;
-    private String title;
+    private String title; //Important
     private String author;
     private int publishedYear;
-    private int copiesAvailable;
+    private int copiesAvailable; //Important
+    
+    
     private LocalDate dueDate;
     private LoanStatus status;
 

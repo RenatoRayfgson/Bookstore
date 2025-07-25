@@ -1,28 +1,19 @@
 package br.edu.ifba.inf008.interfaces;
-
 import java.util.List;
 
 import br.edu.ifba.inf008.interfaces.models.Book;
 
-public interface IBookPlugin extends IPlugin {
+public interface IBookPlugin {
 
-    Book addBook(Book book);
-    
-    boolean deleteBook(Integer bookId);
-    
-    boolean updateBook(Book book);
-    
-    Book getBookByID(Integer bookId);
-    
+    Book getBookById(String id);
     List<Book> getAllBooks();
-    
+    void addBook(Book book);
+    void updateBook(Book book);
+    void deleteBook(String id);
+    Book getBookByIsbn(String isbn);
+    Book getBookByID(Integer id);
     boolean isBookAvailable(Integer bookId);
-    
-    boolean decrementAvailableCopies(Integer bookId);
-    
     boolean incrementAvailableCopies(Integer bookId);
-    
-    List<Book> getBooksByAuthor(String author);
-    
-    List<Book> getBooksByTitle(String title);
+    boolean decrementAvailableCopies(Integer bookId);
+
 }

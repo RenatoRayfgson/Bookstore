@@ -27,44 +27,32 @@ public class UserPlugin implements IUserPlugin {
     MenuItem menuItem = uiController.createMenuItem("User", "User Management");
 
     menuItem.setOnAction((ActionEvent e) -> {
-        try {
-            // --- INÍCIO DA CORREÇÃO ---
-
-            // 1. Encontra o caminho para o FXML, como antes.
+        try {            
             String fxmlPath = "/br/edu/ifba/inf008/plugins/ui/UserView.fxml";
             URL fxmlUrl = getClass().getResource(fxmlPath);
-
-            // 2. Cria uma INSTÂNCIA do FXMLLoader, em vez de usar o método estático.
-            FXMLLoader fxmlLoader = new FXMLLoader();
             
-            // 3. Define a localização do FXML.
-            fxmlLoader.setLocation(fxmlUrl);
+            FXMLLoader fxmlLoader = new FXMLLoader();            
             
-            // 4. ESTA É A LINHA MÁGICA: Diz ao FXMLLoader para usar o ClassLoader deste plugin.
+            fxmlLoader.setLocation(fxmlUrl);            
+            
             fxmlLoader.setClassLoader(getClass().getClassLoader());
-
-            // 5. Carrega a UI usando a instância configurada.
+            
             Parent userUi = fxmlLoader.load();
             
-            // --- FIM DA CORREÇÃO ---
-
-            // O resto do código continua igual.
             UserViewController controller = fxmlLoader.getController();
             controller.setUserPlugin(this);
 
-            uiController.createTab("User", userUi);
+            uiController.setMainContent(userUi);
 
         } catch (IOException ex) {
             System.err.println("Falha ao carregar a UI do plugin de usuário.");
             ex.printStackTrace();
-        }
-    });
+            }
+        });
 
-    return true;
-}
-
-    // --- Implementação dos métodos de serviço do IUserPlugin ---
-    // A classe agora delega as chamadas para o seu próprio UserManager.
+        return true;
+    }
+    
 
     @Override
     public User addUser(User user) {

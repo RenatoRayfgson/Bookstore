@@ -2,6 +2,7 @@ package br.edu.ifba.inf008.plugins.ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import br.edu.ifba.inf008.interfaces.IUserPlugin;
 import br.edu.ifba.inf008.interfaces.models.User;
@@ -20,11 +21,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class UserViewController implements Initializable{
     
     private IUserPlugin userPlugin;
-
-    @FXML private TextField txtId;
+    
     @FXML private TextField txtName;
     @FXML private TextField txtEmail;
 
+    
     @FXML private Button CreateButton;
     @FXML private Button UpdateButton;
     @FXML private Button DeleteButton;
@@ -45,8 +46,7 @@ public class UserViewController implements Initializable{
     }
 
     private void fillFieldsWithUser(User user) {
-        if (user != null) {
-            txtId.setText(String.valueOf(user.getUserId()));
+        if (user != null) {            
             txtName.setText(user.getName());
             txtEmail.setText(user.getEmail());
         }
@@ -57,11 +57,22 @@ public class UserViewController implements Initializable{
         UsersTable.setItems(userList);
     }
 
-    private void cleanData() {
-    txtId.clear();
+    private void cleanData() {    
     txtName.clear();
     txtEmail.clear();
     UsersTable.getSelectionModel().clearSelection();
+    }
+
+    private boolean isValidEmail(String email) {
+    
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
+                            "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+
+        Pattern pattern = Pattern.compile(emailRegex);
+        if (email == null) {
+            return false;
+        }
+        return pattern.matcher(email).matches();
     }
 
     @Override
@@ -86,6 +97,11 @@ public class UserViewController implements Initializable{
             displayAlert("Error", "All fields must be filled.");
             return;
         }
+        String email = txtEmail.getText();
+        if (!isValidEmail(email)) {
+            displayAlert("Invalid Email", "Please enter a valid email format (e.g., name@domain.com).");
+            return;
+        }
         User newUser = new User(txtName.getText(), txtEmail.getText());
         userPlugin.addUser(newUser);
         refreshTable();
@@ -94,24 +110,25 @@ public class UserViewController implements Initializable{
 
     @FXML
     private void UpdateButtonAction(ActionEvent event){
-        if(txtId.getText().isEmpty() || txtName.getText().isEmpty() || txtEmail.getText().isEmpty()){
+        if(txtName.getText().isEmpty() || txtEmail.getText().isEmpty()){
             displayAlert("Error", "All fields must be filled.");
             return;
         }
+        String email = txtEmail.getText();
+        if (!isValidEmail(email)) {
+            displayAlert("Invalid Email", "Please enter a valid email format (e.g., name@domain.com).");
+            return;
+        }
         User updatedUser = new User(txtName.getText(), txtEmail.getText());
-        updatedUser.setUserId(Integer.valueOf(txtId.getText()));
+        updatedUser.setUserId(UsersTable.getSelectionModel().getSelectedItem().getUserId());
         userPlugin.updateUser(updatedUser);
         refreshTable();
         cleanData();
     }
 
     @FXML
-    private void DeleteButtonAction(ActionEvent event){
-        if(txtId.getText().isEmpty()){
-            displayAlert("Error", "ID field must be filled.");
-            return;
-        }
-        userPlugin.deleteUser(Integer.valueOf(txtId.getText()));
+    private void DeleteButtonAction(ActionEvent event){        
+        userPlugin.deleteUser(UsersTable.getSelectionModel().getSelectedItem().getUserId());
         refreshTable();
         cleanData();
     }
