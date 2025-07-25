@@ -13,6 +13,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+@SuppressWarnings("unused")
 public class UIController extends Application implements IUIController
 {
     private ICore core;

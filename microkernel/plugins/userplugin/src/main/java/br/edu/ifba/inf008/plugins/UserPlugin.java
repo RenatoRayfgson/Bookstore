@@ -14,7 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
 
-// A classe do plugin agora também implementa sua própria interface de serviço
+@SuppressWarnings("unused")
 public class UserPlugin implements IUserPlugin {
 
     private final UserManager userManager = new UserManager();

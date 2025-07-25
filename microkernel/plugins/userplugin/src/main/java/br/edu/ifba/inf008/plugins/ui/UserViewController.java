@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+@SuppressWarnings("unused")
 public class UserViewController implements Initializable{
     
     private IUserPlugin userPlugin;

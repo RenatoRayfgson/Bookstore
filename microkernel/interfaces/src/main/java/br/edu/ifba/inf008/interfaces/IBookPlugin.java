@@ -3,15 +3,16 @@ import java.util.List;
 
 import br.edu.ifba.inf008.interfaces.models.Book;
 
-public interface IBookPlugin {
-
-    Book getBookById(String id);
+public interface IBookPlugin extends IPlugin {
+    
+    boolean addBook(Book book);
+    boolean updateBook(Book book);
+    boolean deleteBook(Integer id);
+    
     List<Book> getAllBooks();
-    void addBook(Book book);
-    void updateBook(Book book);
-    void deleteBook(String id);
     Book getBookByIsbn(String isbn);
     Book getBookByID(Integer id);
+    
     boolean isBookAvailable(Integer bookId);
     boolean incrementAvailableCopies(Integer bookId);
     boolean decrementAvailableCopies(Integer bookId);

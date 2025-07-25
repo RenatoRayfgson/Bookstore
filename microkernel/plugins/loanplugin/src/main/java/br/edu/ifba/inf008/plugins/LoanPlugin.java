@@ -6,9 +6,10 @@ import br.edu.ifba.inf008.interfaces.IUIController;
 import javafx.event.ActionEvent;
 import javafx.scene.control.MenuItem;
 
+@SuppressWarnings("unused")
 public class LoanPlugin implements IPlugin
 {
-    @Override //Adicionado depois
+    @Override
     public boolean init() {
         IUIController uiController = ICore.getInstance().getUIController();
 
