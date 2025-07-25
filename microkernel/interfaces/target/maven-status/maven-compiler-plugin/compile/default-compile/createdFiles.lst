@@ -1,6 +1,14 @@
-br\edu\ifba\inf008\interfaces\IUIController.class
-br\edu\ifba\inf008\interfaces\IPlugin.class
-br\edu\ifba\inf008\interfaces\ICore.class
+br\edu\ifba\inf008\interfaces\IBookPlugin.class
+br\edu\ifba\inf008\interfaces\models\User.class
+br\edu\ifba\inf008\interfaces\ILoanPlugin.class
 br\edu\ifba\inf008\interfaces\IPluginController.class
 br\edu\ifba\inf008\interfaces\IIOController.class
 br\edu\ifba\inf008\interfaces\IAuthenticationController.class
+br\edu\ifba\inf008\interfaces\utils\DBConnector.class
+br\edu\ifba\inf008\interfaces\models\Loan.class
+br\edu\ifba\inf008\interfaces\IPlugin.class
+br\edu\ifba\inf008\interfaces\IUserPlugin.class
+br\edu\ifba\inf008\interfaces\ICore.class
+br\edu\ifba\inf008\interfaces\models\Book$LoanStatus.class
+br\edu\ifba\inf008\interfaces\models\Book.class
+br\edu\ifba\inf008\interfaces\IUIController.class

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.inf008.plugins.ui.BookViewController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <TableView fx:id="BooksTable" layoutX="215.0" layoutY="24.0" prefHeight="357.0" prefWidth="415.0">
+              <columns>
+                <TableColumn fx:id="IdColumn" prefWidth="46.0" text="ID" />
+                <TableColumn fx:id="TitleColumn" prefWidth="221.0" text="Title" />
+                  <TableColumn fx:id="AuthorColumn" minWidth="0.0" prefWidth="90.0" text="Author" />
+                  <TableColumn fx:id="AvailableColumn" minWidth="0.0" prefWidth="57.0" text="Available" />
+              </columns>
+            </TableView>
+            <Button fx:id="CreateButton" layoutX="20.0" layoutY="321.0" mnemonicParsing="false" onAction="#CreateButtonAction" text="Create" />
+            <Button fx:id="UpdateButton" layoutX="81.0" layoutY="321.0" mnemonicParsing="false" onAction="#UpdateButtonAction" text="Update" />
+            <Button fx:id="DeleteButton" layoutX="146.0" layoutY="321.0" mnemonicParsing="false" onAction="#DeleteButtonAction" text="Delete" />
+            <TextField fx:id="txtTitle" layoutX="22.0" layoutY="74.0" />
+            <TextField fx:id="txtIsbn" layoutX="22.0" layoutY="119.0" />
+            <TextField fx:id="txtAuthor" layoutX="22.0" layoutY="166.0" />
+            <TextField fx:id="txtPY" layoutX="22.0" layoutY="212.0" />
+            <TextField fx:id="txtAC" layoutX="22.0" layoutY="258.0" />
+            <Label layoutX="25.0" layoutY="50.0" text="Title" />
+            <Label layoutX="23.0" layoutY="99.0" text="isbn" />
+            <Label layoutX="25.0" layoutY="149.0" text="Author" />
+            <Label layoutX="22.0" layoutY="195.0" text="Publication Year" />
+            <Label layoutX="23.0" layoutY="241.0" text="Available Copies" />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

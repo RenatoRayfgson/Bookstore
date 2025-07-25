@@ -1,26 +1,81 @@
 package br.edu.ifba.inf008.plugins;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+
 import br.edu.ifba.inf008.interfaces.ICore;
-import br.edu.ifba.inf008.interfaces.IPlugin;
 import br.edu.ifba.inf008.interfaces.IUIController;
+import br.edu.ifba.inf008.interfaces.IUserPlugin;
+import br.edu.ifba.inf008.interfaces.models.User;
+import br.edu.ifba.inf008.plugins.ui.UserViewController;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
-public class UserPlugin implements IPlugin
-{
-    @Override //Adicionado depois
+@SuppressWarnings("unused")
+public class UserPlugin implements IUserPlugin {
+
+    private final UserManager userManager = new UserManager();
+
+    @Override
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean init() {
-        IUIController uiController = ICore.getInstance().getUIController();
+    IUIController uiController = ICore.getInstance().getUIController();
 
-        MenuItem menuItem = uiController.createMenuItem("Menu 2", "My Menu Item");
-        menuItem.setOnAction((ActionEvent e) -> { //Linha antiga: menuItem.setOnAction(new EventHandler<ActionEvent>()
-            System.out.println("I've been clicked!");
+    MenuItem menuItem = uiController.createMenuItem("User", "User Management");
+
+    menuItem.setOnAction((ActionEvent e) -> {
+        try {            
+            String fxmlPath = "/br/edu/ifba/inf008/plugins/ui/UserView.fxml";
+            URL fxmlUrl = getClass().getResource(fxmlPath);
+            
+            FXMLLoader fxmlLoader = new FXMLLoader();            
+            
+            fxmlLoader.setLocation(fxmlUrl);            
+            
+            fxmlLoader.setClassLoader(getClass().getClassLoader());
+            
+            Parent userUi = fxmlLoader.load();
+            
+            UserViewController controller = fxmlLoader.getController();
+            controller.setUserPlugin(this);
+
+            uiController.setMainContent(userUi);
+
+        } catch (IOException ex) {
+            System.err.println("Falha ao carregar a UI do plugin de usuário.");
+            ex.printStackTrace();
+            }
         });
 
-        uiController.createTab("new tab 2", new Rectangle(200,200, Color.LIGHTSTEELBLUE));
-
         return true;
+    }
+    
+
+    @Override
+    public User addUser(User user) {
+        return userManager.addUser(user);
+    }
+
+    @Override
+    public boolean deleteUser(Integer userId) {
+        return userManager.deleteUser(userId);
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        return userManager.updateUser(user);
+    }
+
+    @Override
+    public User getUserById(Integer userId) {
+        return userManager.getUserById(userId);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userManager.getAllUsers();
     }
 }

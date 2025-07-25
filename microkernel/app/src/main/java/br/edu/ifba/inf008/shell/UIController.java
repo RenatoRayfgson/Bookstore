@@ -3,7 +3,6 @@ package br.edu.ifba.inf008.shell;
 import br.edu.ifba.inf008.interfaces.ICore;
 import br.edu.ifba.inf008.interfaces.IUIController;
 import javafx.application.Application;
-import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -11,15 +10,17 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+@SuppressWarnings("unused")
 public class UIController extends Application implements IUIController
 {
     private ICore core;
     private MenuBar menuBar;
     private TabPane tabPane;
     private static UIController uiController;
+    private BorderPane mainLayout;
 
     public UIController() {
     }
@@ -35,27 +36,23 @@ public class UIController extends Application implements IUIController
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
-
+        primaryStage.setTitle("Bookstore Manager");
+        
+        mainLayout = new BorderPane();
+        
         menuBar = new MenuBar();
+        mainLayout.setTop(menuBar);
 
-        VBox vBox = new VBox(menuBar);
-
-        tabPane = new TabPane();
-        tabPane.setSide(Side.BOTTOM);
-
-        vBox.getChildren().addAll(tabPane);
-
-        Scene scene = new Scene(vBox, 960, 600);
+        Scene scene = new Scene(mainLayout, 960, 600);
 
         primaryStage.setScene(scene);
         primaryStage.show();
-
+        
         Core.getInstance().getPluginController().init();
     }
 
     public MenuItem createMenuItem(String menuText, String menuItemText) {
-        // Criar o menu caso ele nao exista
+        
         Menu newMenu = null;
         for (Menu menu : menuBar.getMenus()) {
             if (menu.getText() == menuText) {
@@ -67,8 +64,7 @@ public class UIController extends Application implements IUIController
             newMenu = new Menu(menuText);
             menuBar.getMenus().add(newMenu);
         }
-
-        // Criar o menu item neste menu
+        
         MenuItem menuItem = new MenuItem(menuItemText);
         newMenu.getItems().add(menuItem);
 
@@ -82,5 +78,9 @@ public class UIController extends Application implements IUIController
         tabPane.getTabs().add(tab);
 
         return true;
+    }
+
+    public void setMainContent(Node node) {
+        mainLayout.setCenter(node);
     }
 }

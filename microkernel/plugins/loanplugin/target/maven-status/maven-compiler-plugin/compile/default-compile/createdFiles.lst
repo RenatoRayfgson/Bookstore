@@ -1,1 +1,2 @@
-br\edu\ifba\inf008\plugins\UserPlugin.class
+br\edu\ifba\inf008\plugins\LoanPlugin.class
+br\edu\ifba\inf008\plugins\LoanManager.class

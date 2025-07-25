@@ -10,7 +10,7 @@
     <module>plugins/myplugin</module>
     <module>plugins/userplugin</module>
     <module>plugins/bookplugin</module>
-    <module>plugins/loanplugin</module>
+    <module>plugins/loanplugin</module>    
   </modules>
   <properties>
     <maven.compiler.source>24</maven.compiler.source>
