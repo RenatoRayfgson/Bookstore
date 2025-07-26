@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.edu.ifba.inf008.interfaces.IBookPlugin;
-import br.edu.ifba.inf008.interfaces.IUserPlugin;
 import br.edu.ifba.inf008.interfaces.models.Book;
 import br.edu.ifba.inf008.interfaces.models.Book.LoanStatus;
 import br.edu.ifba.inf008.interfaces.models.Loan;
@@ -23,15 +21,8 @@ import br.edu.ifba.inf008.interfaces.utils.DBConnector;
 
 public class LoanManager {
 
-    private final IBookPlugin bookManager;
-    private final IUserPlugin userManager;
     private final Map<Integer, Loan> activeLoansInMemory = new HashMap<>();
-
-    public LoanManager(IBookPlugin bookManager, IUserPlugin userManager) {
-        this.bookManager = bookManager;
-        this.userManager = userManager;
-
-    }
+    
 
     public Loan registerLoan(Integer userID, Integer bookID, LocalDate dueDate){
         if(userID == null || bookID == null || dueDate == null){
@@ -43,24 +34,24 @@ public class LoanManager {
             connection = DBConnector.getConnection();
             connection.setAutoCommit(false);
 
-            User user = userManager.getUserById(userID);
+            User user = getUserById(userID);
             if(user == null) {
                 System.out.println("User not found.");
                 connection.rollback();
                 return null;
             }
-            Book book = bookManager.getBookById(bookID);
+            Book book = getBookById(bookID);
             if(book == null) {
                 System.out.println("Book not found.");
                 connection.rollback();
                 return null;
             }
-            if(!bookManager.isBookAvailable(bookID)) {
+            if(!isBookAvailable(bookID)) {
                 System.out.println("No copies available for this book.");
                 connection.rollback();
                 return null;
             }
-            if(!bookManager.decrementAvailableCopies(bookID)){
+            if(!decrementAvailableCopies(bookID)){
                 System.out.println("Failed to decrement available copies.");
                 connection.rollback();
                 return null;
@@ -183,7 +174,7 @@ public class LoanManager {
                 pstmt.setInt(2, loanID);
                 int affectedRows = pstmt.executeUpdate();
                 if(affectedRows > 0) {
-                    if(!bookManager.incrementAvailableCopies(loan.getBookId())) {
+                    if(!incrementAvailableCopies(loan.getBookId())) {
                         System.out.println("Something went wrong at incrementing available copies.");
                         connection.rollback(); //Decidi fazer rollback, mas talvez seja uma decisão mais inteligente commitar
                         return null;
@@ -362,7 +353,7 @@ public class LoanManager {
             if(rowsAffected > 0){
                 System.out.println("Loan deleted successfully.");
                 if(loanToDelete.getStatus() == LoanStatus.ACTIVE || loanToDelete.getStatus() == LoanStatus.OVERDUE) {
-                    bookManager.incrementAvailableCopies(loanToDelete.getBookId());
+                    this.incrementAvailableCopies(loanToDelete.getBookId());
                     System.out.println("The book was retuned and is available again.");
                 }
                 activeLoansInMemory.remove(loanId);
@@ -394,6 +385,129 @@ public class LoanManager {
                     }
                 }
             }
+        }
+    }
+
+    private User getUserById(Integer userId) {
+        String sql = "SELECT user_id, name, email, registered_at FROM users WHERE user_id = ?";
+        try (Connection connection = DBConnector.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
+                    user.setUserId(rs.getInt("user_id"));
+                    user.setName(rs.getString("name"));
+                    user.setEmail(rs.getString("email"));
+                    // Ignorando registered_at por simplicidade
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("LoanManager Error (getUserById): " + e.getMessage());
+        }
+        return null;
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT user_id, name, email FROM users";
+        try (Connection connection = DBConnector.getConnection();
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                User user = new User();
+                user.setUserId(rs.getInt("user_id"));
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.err.println("LoanManager Error (getAllUsers): " + e.getMessage());
+        }
+        return users;
+    }
+
+    private Book getBookById(Integer bookId) {
+        String sql = "SELECT book_id, title, author, copies_available FROM books WHERE book_id = ?";
+        try (Connection connection = DBConnector.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, bookId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    Book book = new Book();
+                    book.setBookId(rs.getInt("book_id"));
+                    book.setTitle(rs.getString("title"));
+                    book.setAuthor(rs.getString("author"));
+                    book.setCopiesAvailable(rs.getInt("copies_available"));
+                    return book;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("LoanManager Error (getBookById): " + e.getMessage());
+        }
+        return null;
+    }
+
+    public List<Book> getAllBooks() {
+        List<Book> books = new ArrayList<>();
+        String sql = "SELECT book_id, title, author, copies_available FROM books";
+        try (Connection connection = DBConnector.getConnection();
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Book book = new Book();
+                book.setBookId(rs.getInt("book_id"));
+                book.setTitle(rs.getString("title"));
+                book.setAuthor(rs.getString("author"));
+                book.setCopiesAvailable(rs.getInt("copies_available"));
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            System.err.println("LoanManager Error (getAllBooks): " + e.getMessage());
+        }
+        return books;
+    }
+
+    private boolean isBookAvailable(Integer bookId) {
+        String sql = "SELECT copies_available FROM books WHERE book_id = ?";
+        try (Connection connection = DBConnector.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, bookId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("copies_available") > 0;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("LoanManager Error (isBookAvailable): " + e.getMessage());
+        }
+        return false;
+    }
+
+    private boolean decrementAvailableCopies(Integer bookId) {
+        String sql = "UPDATE books SET copies_available = copies_available - 1 WHERE book_id = ? AND copies_available > 0";
+        try (Connection connection = DBConnector.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, bookId);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            System.err.println("LoanManager Error (decrementAvailableCopies): " + e.getMessage());
+            return false;
+        }
+    }
+
+    private boolean incrementAvailableCopies(Integer bookId) {
+        String sql = "UPDATE books SET copies_available = copies_available + 1 WHERE book_id = ?";
+        try (Connection connection = DBConnector.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, bookId);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            System.err.println("LoanManager Error (incrementAvailableCopies): " + e.getMessage());
+            return false;
         }
     }
 
