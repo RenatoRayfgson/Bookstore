@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.inf008.plugins.ui.ReturnLoanViewController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+            <TableView fx:id="LoanTable" layoutX="20.0" layoutY="185.0" prefHeight="194.0" prefWidth="598.0">
+              <columns>
+                <TableColumn fx:id="IdColumun" prefWidth="55.0" text="ID" />
+                <TableColumn fx:id="TitleColumn" prefWidth="236.0" text="Title" />
+                  <TableColumn fx:id="ClientColumn" prefWidth="177.0" text="Client" />
+                  <TableColumn fx:id="StatusColumn" prefWidth="129.0" text="Status" />
+              </columns>
+            </TableView>
+            <Button fx:id="FinishButton" layoutX="253.0" layoutY="146.0" mnemonicParsing="false" onAction="#FinishButtonAction" prefHeight="25.0" prefWidth="133.0" text="Finish Loan" />
+            <TextField fx:id="txtLoanID" layoutX="27.0" layoutY="70.0" prefHeight="25.0" prefWidth="57.0" />
+            <TextField fx:id="txtTitle" layoutX="141.0" layoutY="70.0" prefHeight="25.0" prefWidth="206.0" />
+            <TextField fx:id="txtClient" layoutX="412.0" layoutY="70.0" prefHeight="25.0" prefWidth="206.0" />
+            <Label layoutX="27.0" layoutY="53.0" text="Loan ID" />
+            <Label layoutX="141.0" layoutY="53.0" text="Title " />
+            <Label layoutX="412.0" layoutY="53.0" text="Client" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

@@ -11,7 +11,7 @@ public interface IBookPlugin extends IPlugin {
     
     List<Book> getAllBooks();
     Book getBookByIsbn(String isbn);
-    Book getBookByID(Integer id);
+    Book getBookById(Integer id);
     
     boolean isBookAvailable(Integer bookId);
     boolean incrementAvailableCopies(Integer bookId);

@@ -49,7 +49,7 @@ public class LoanManager {
                 connection.rollback();
                 return null;
             }
-            Book book = bookManager.getBookByID(bookID);
+            Book book = bookManager.getBookById(bookID);
             if(book == null) {
                 System.out.println("Book not found.");
                 connection.rollback();

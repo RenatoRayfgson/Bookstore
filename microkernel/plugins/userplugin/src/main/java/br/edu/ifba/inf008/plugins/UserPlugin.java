@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.List;
 
 import br.edu.ifba.inf008.interfaces.ICore;
+import br.edu.ifba.inf008.interfaces.IPlugin;
 import br.edu.ifba.inf008.interfaces.IUIController;
 import br.edu.ifba.inf008.interfaces.IUserPlugin;
 import br.edu.ifba.inf008.interfaces.models.User;
@@ -15,7 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
 
 @SuppressWarnings("unused")
-public class UserPlugin implements IUserPlugin {
+public class UserPlugin implements IPlugin, IUserPlugin {
 
     private final UserManager userManager = new UserManager();
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.edu.ifba.inf008.interfaces.IBookPlugin;
 import br.edu.ifba.inf008.interfaces.ICore;
+import br.edu.ifba.inf008.interfaces.IPlugin;
 import br.edu.ifba.inf008.interfaces.IUIController;
 import br.edu.ifba.inf008.interfaces.models.Book;
 import br.edu.ifba.inf008.plugins.ui.BookViewController;
@@ -15,7 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
 
 @SuppressWarnings("unused")
-public class BookPlugin implements IBookPlugin {
+public class BookPlugin implements IPlugin, IBookPlugin {
     
     private final BookManager bookManager = new BookManager();
 
@@ -94,7 +95,7 @@ public class BookPlugin implements IBookPlugin {
     }
 
     @Override
-    public Book getBookByID(Integer id) {
+    public Book getBookById(Integer id) {
         return bookManager.getBookByID(id);
     }
 }

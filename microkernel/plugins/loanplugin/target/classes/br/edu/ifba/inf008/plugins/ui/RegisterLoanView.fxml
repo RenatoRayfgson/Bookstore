@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.inf008.plugins.ui.NewLoanViewController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+            <TextField fx:id="txtName" layoutX="22.0" layoutY="40.0" prefHeight="25.0" prefWidth="161.0" />
+            <TextField fx:id="txtTitle" layoutX="23.0" layoutY="94.0" prefHeight="25.0" prefWidth="161.0" />
+            <Button fx:id="RegisterButton" layoutX="24.0" layoutY="138.0" mnemonicParsing="false" onAction="#RegisterButtonAction" prefHeight="25.0" prefWidth="106.0" text="Register Loan" />
+            <TableView fx:id="UsersTable" layoutX="404.0" layoutY="52.0" prefHeight="337.0" prefWidth="224.0">
+              <columns>
+                <TableColumn fx:id="UserIdColumn" prefWidth="54.0" text="ID" />
+                <TableColumn fx:id="NameColumn" prefWidth="169.0" text="Name" />
+              </columns>
+            </TableView>
+            <TableView fx:id="BooksTable" layoutX="10.0" layoutY="228.0" prefHeight="160.0" prefWidth="369.0">
+              <columns>
+                <TableColumn fx:id="BookIdColumn" prefWidth="57.0" text="ID" />
+                <TableColumn fx:id="TitleColumn" prefWidth="252.0" text="Title" />
+                  <TableColumn fx:id="ACColumn" prefWidth="59.0" text="Available" />
+              </columns>
+            </TableView>
+            <Label layoutX="22.0" layoutY="23.0" text="Name" />
+            <Label layoutX="24.0" layoutY="77.0" text="Title" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
