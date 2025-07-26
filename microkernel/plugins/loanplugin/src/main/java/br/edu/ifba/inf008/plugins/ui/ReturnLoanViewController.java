@@ -4,11 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.ServiceLoader;
 
-import br.edu.ifba.inf008.interfaces.IBookPlugin;
 import br.edu.ifba.inf008.interfaces.ILoanPlugin;
-import br.edu.ifba.inf008.interfaces.IUserPlugin;
 import br.edu.ifba.inf008.interfaces.models.Book;
 import br.edu.ifba.inf008.interfaces.models.Book.LoanStatus;
 import br.edu.ifba.inf008.interfaces.models.Loan;
@@ -55,9 +52,7 @@ public class ReturnLoanViewController implements Initializable {
 
     }
 
-    private ILoanPlugin loanPlugin;
-    private IBookPlugin bookPlugin; 
-    private IUserPlugin userPlugin;
+    private ILoanPlugin loanPlugin; 
 
     @FXML private TextField txtLoanID;
     @FXML private TextField txtTitle;
@@ -70,23 +65,32 @@ public class ReturnLoanViewController implements Initializable {
     @FXML private TableColumn<LoanDetail, String> ClientColumn;
     @FXML private TableColumn<LoanDetail, LoanStatus> StatusColumn;
 
-    private void refreshTable() {
-        if (loanPlugin == null) return;
+        private void refreshTable() {
+        if (loanPlugin == null) return;        
         
         List<Loan> activeLoans = loanPlugin.getActiveLoans();        
+        List<User> allUsers = loanPlugin.getAllUsers();
+        List<Book> allBooks = loanPlugin.getAllBooks();        
         
         List<LoanDetail> loanDetails = new ArrayList<>();
-        for (Loan loan : activeLoans) {
-            User user = userPlugin.getUserById(loan.getUserId());
-            Book book = bookPlugin.getBookById(loan.getBookId());
+        for (Loan loan : activeLoans) {            
+            String clientName = allUsers.stream()
+                .filter(user -> user.getUserId().equals(loan.getUserId()))
+                .map(User::getName)
+                .findFirst()
+                .orElse("Unknown User");            
             
-            String clientName = (user != null) ? user.getName() : "Unknown User";
-            String bookTitle = (book != null) ? book.getTitle() : "Unknown Book";
+            String bookTitle = allBooks.stream()
+                .filter(book -> book.getBookId().equals(loan.getBookId()))
+                .map(Book::getTitle)
+                .findFirst()
+                .orElse("Unknown Book");
 
             loanDetails.add(new LoanDetail(loan.getLoanId(), clientName, bookTitle, loan.getStatus()));
         }
         
         LoanTable.setItems(FXCollections.observableArrayList(loanDetails));
+        clearData();
     }
     
     private void clearData() {
@@ -107,7 +111,6 @@ public class ReturnLoanViewController implements Initializable {
             clearData();
         }
     }
-
     
     private void displayAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);
@@ -117,23 +120,13 @@ public class ReturnLoanViewController implements Initializable {
         alert.showAndWait();
     }
 
-
     public void setPlugin(ILoanPlugin loanPlugin){
         this.loanPlugin = loanPlugin; 
         refreshTable();        
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        this.userPlugin = ServiceLoader.load(IUserPlugin.class, classLoader).findFirst().orElse(null);
-        this.bookPlugin = ServiceLoader.load(IBookPlugin.class, classLoader).findFirst().orElse(null);
-
-        if(userPlugin == null || bookPlugin == null) {
-            displayAlert("Error", "Required plugins not found.", Alert.AlertType.ERROR);
-            return;
-        }
+    public void initialize(URL location, ResourceBundle resources) {        
 
         IdColumn.setCellValueFactory(new PropertyValueFactory<>("loanId"));
         TitleColumn.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
@@ -157,6 +150,7 @@ public class ReturnLoanViewController implements Initializable {
         }
 
         var returnedLoan = loanPlugin.registerReturn(selectedLoan.getLoanId());
+        
         if(returnedLoan != null){
             displayAlert("Success", "Loan returned successfully.", Alert.AlertType.INFORMATION);
             refreshTable();

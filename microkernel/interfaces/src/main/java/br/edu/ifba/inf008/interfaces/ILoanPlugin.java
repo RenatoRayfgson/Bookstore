@@ -3,7 +3,9 @@ package br.edu.ifba.inf008.interfaces;
 import java.time.LocalDate;
 import java.util.List;
 
+import br.edu.ifba.inf008.interfaces.models.Book;
 import br.edu.ifba.inf008.interfaces.models.Loan;
+import br.edu.ifba.inf008.interfaces.models.User;
 
 public interface ILoanPlugin extends IPlugin {
 
@@ -24,4 +26,9 @@ public interface ILoanPlugin extends IPlugin {
     Boolean deleteLoan(Integer loanId);
     
     void markOverduedLoans();
+
+    List<User> getAllUsers();
+
+    List<Book> getAllBooks();
+
 }

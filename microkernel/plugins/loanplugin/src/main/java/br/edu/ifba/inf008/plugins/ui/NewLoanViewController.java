@@ -2,11 +2,8 @@ package br.edu.ifba.inf008.plugins.ui;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.ServiceLoader;
 
-import br.edu.ifba.inf008.interfaces.IBookPlugin;
 import br.edu.ifba.inf008.interfaces.ILoanPlugin;
-import br.edu.ifba.inf008.interfaces.IUserPlugin;
 import br.edu.ifba.inf008.interfaces.models.Book;
 import br.edu.ifba.inf008.interfaces.models.User;
 import javafx.collections.FXCollections;
@@ -23,9 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 @SuppressWarnings("unused")
 public class NewLoanViewController implements Initializable {
 
-    private ILoanPlugin loanPlugin;
-    private IBookPlugin bookPlugin;
-    private IUserPlugin userPlugin;
+    private ILoanPlugin loanPlugin;    
 
     @FXML private TextField txtName;
     @FXML private TextField txtTitle;
@@ -43,15 +38,7 @@ public class NewLoanViewController implements Initializable {
 
     
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        this.userPlugin = ServiceLoader.load(IUserPlugin.class, classLoader).findFirst().orElse(null);
-        this.bookPlugin = ServiceLoader.load(IBookPlugin.class, classLoader).findFirst().orElse(null);
-        
-        if(userPlugin == null || bookPlugin == null) {
-            displayAlert("Error", "Required plugins not found.", Alert.AlertType.ERROR);
-            return;
-        }
+    public void initialize(URL location, ResourceBundle resources) {        
         
         UserIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -67,10 +54,15 @@ public class NewLoanViewController implements Initializable {
         txtTitle.setEditable(false);
         RegisterButton.setDisable(true);
     }
+
+    public void setPlugin(ILoanPlugin plugin) {
+        this.loanPlugin = plugin;
+        refreshTables();
+    }
     
-    private void refreshTables() {
-        UsersTable.setItems(FXCollections.observableArrayList(userPlugin.getAllUsers()));
-        BooksTable.setItems(FXCollections.observableArrayList(bookPlugin.getAllBooks()));
+    private void refreshTables() {        
+        UsersTable.setItems(FXCollections.observableArrayList(loanPlugin.getAllUsers()));
+        BooksTable.setItems(FXCollections.observableArrayList(loanPlugin.getAllBooks()));
     }
 
     private void fillFieldsAndCheckReadiness() {
@@ -98,11 +90,7 @@ public class NewLoanViewController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-    public void setPlugin(ILoanPlugin plugin) {
-        this.loanPlugin = plugin;
-        refreshTables();
-    }
+    }    
 
     @FXML
     private void RegisterButtonAction(ActionEvent event) {
