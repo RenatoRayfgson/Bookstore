@@ -11,11 +11,13 @@ import br.edu.ifba.inf008.interfaces.IPluginController;
 
 public class PluginController implements IPluginController
 {
+    @SuppressWarnings("override")
     public boolean init() {
         try {
             File currentDir = new File("./plugins");
 
             // Define a FilenameFilter to include only .jar files
+            @SuppressWarnings("Convert2Lambda")
             FilenameFilter jarFilter = new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {

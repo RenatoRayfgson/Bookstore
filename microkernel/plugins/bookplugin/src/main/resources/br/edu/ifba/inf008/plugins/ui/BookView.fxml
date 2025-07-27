@@ -9,9 +9,9 @@
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.inf008.plugins.ui.BookViewController">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane prefHeight="386.0" prefWidth="647.0">
          <children>
-            <TableView fx:id="BooksTable" layoutX="215.0" layoutY="24.0" prefHeight="357.0" prefWidth="415.0">
+            <TableView fx:id="BooksTable" layoutX="225.0" layoutY="42.0" prefHeight="341.0" prefWidth="401.0">
               <columns>
                 <TableColumn fx:id="IdColumn" prefWidth="46.0" text="ID" />
                 <TableColumn fx:id="TitleColumn" prefWidth="221.0" text="Title" />
@@ -32,6 +32,7 @@
             <Label layoutX="25.0" layoutY="149.0" text="Author" />
             <Label layoutX="22.0" layoutY="195.0" text="Publication Year" />
             <Label layoutX="23.0" layoutY="241.0" text="Available Copies" />
+            <TextField fx:id="SearchTitle" layoutX="225.0" layoutY="17.0" prefHeight="25.0" prefWidth="180.0" promptText="Search by Title" />
          </children>
       </AnchorPane>
    </children>

@@ -29,6 +29,8 @@
             </TableView>
             <Label layoutX="22.0" layoutY="23.0" text="Name" />
             <Label layoutX="24.0" layoutY="77.0" text="Title" />
+            <TextField fx:id="SearchUser" layoutX="404.0" layoutY="19.0" promptText="Search by name" />
+            <TextField fx:id="SearchBook" layoutX="14.0" layoutY="200.0" promptText="Search by name" />
       </children>
     </AnchorPane>
   </children>

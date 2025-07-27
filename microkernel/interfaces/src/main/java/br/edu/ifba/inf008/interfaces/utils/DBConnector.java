@@ -10,8 +10,7 @@ public class DBConnector {
     private static final String USER = "root";
     private static final String PASSWORD = "root";
 
-    public static Connection getConnection() throws SQLException {
-        // Garante que o driver JDBC é carregado
+    public static Connection getConnection() throws SQLException {        
         try {
             Class.forName("org.mariadb.jdbc.Driver");
         } catch (ClassNotFoundException e) {
