@@ -20,33 +20,27 @@ import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
 
 @SuppressWarnings("unused")
-// A classe implementa IPlugin (para ser descoberta) e ILoanPlugin (para prover serviços)
 public class LoanPlugin implements IPlugin, ILoanPlugin {
-
-    // Instância do LoanManager independente, que contém toda a lógica de negócio.
+    
     private final LoanManager loanManager;
-
-    /**
-     * O construtor agora é muito simples: apenas cria uma nova instância do LoanManager.
-     */
+    
     public LoanPlugin() {
         this.loanManager = new LoanManager();
     }
 
     @Override
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean init() {
         IUIController uiController = ICore.getInstance().getUIController();
-
-        // --- Item de Menu 1: Registrar Novo Empréstimo ---
+        
         MenuItem registerLoanItem = uiController.createMenuItem("Loan", "Register New Loan");
         
         registerLoanItem.setOnAction((ActionEvent e) -> {
-            try {
-                // ATENÇÃO: Verifique se o nome do seu FXML é "NewLoanView.fxml" ou "RegisterLoanView.fxml"
+            try {                
                 String fxmlPath = "/br/edu/ifba/inf008/plugins/ui/RegisterLoanView.fxml"; 
                 URL fxmlUrl = getClass().getResource(fxmlPath);
 
-                if (fxmlUrl == null) throw new IOException("Arquivo FXML não encontrado: " + fxmlPath);
+                if (fxmlUrl == null) throw new IOException("The file was not found: " + fxmlPath);
                 
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(fxmlUrl);
@@ -60,7 +54,7 @@ public class LoanPlugin implements IPlugin, ILoanPlugin {
                 uiController.setMainContent(ui);
 
             } catch (IOException ex) {
-                System.err.println("Falha ao carregar a UI de Registro de Empréstimo.");
+                System.err.println("Something went wrong while loading the New Loan UI.");
                 ex.printStackTrace();
             }
         });
@@ -73,8 +67,8 @@ public class LoanPlugin implements IPlugin, ILoanPlugin {
                 String fxmlPath = "/br/edu/ifba/inf008/plugins/ui/ReturnLoanView.fxml";
                 URL fxmlUrl = getClass().getResource(fxmlPath);
 
-                if (fxmlUrl == null) throw new IOException("Arquivo FXML não encontrado: " + fxmlPath);
-                
+                if (fxmlUrl == null) throw new IOException("The FXML file was not found: " + fxmlPath);
+
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(fxmlUrl);
                 fxmlLoader.setClassLoader(getClass().getClassLoader());
@@ -87,16 +81,13 @@ public class LoanPlugin implements IPlugin, ILoanPlugin {
                 uiController.setMainContent(ui);
 
             } catch (IOException ex) {
-                System.err.println("Falha ao carregar a UI de Devolução de Empréstimo.");
+                System.err.println("Something went wrong while loading the Return Loan UI.");
                 ex.printStackTrace();
             }
         });
 
         return true;
-    }
-
-    // --- Implementação COMPLETA dos métodos de serviço do ILoanPlugin ---
-    // Eles agora simplesmente delegam a chamada para o loanManager.
+    }    
 
     @Override
     public Loan registerLoan(Integer userId, Integer bookId, LocalDate dueDate) {
@@ -142,8 +133,7 @@ public class LoanPlugin implements IPlugin, ILoanPlugin {
     public void markOverduedLoans() {
         this.loanManager.markOverduedLoans();
     }
-
-    // Métodos para prover dados de User e Book de forma independente
+    
     @Override
     public List<User> getAllUsers() {
         return this.loanManager.getAllUsers();

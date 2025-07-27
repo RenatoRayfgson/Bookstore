@@ -8,6 +8,7 @@ import br.edu.ifba.inf008.interfaces.IUserPlugin;
 import br.edu.ifba.inf008.interfaces.models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,6 +26,7 @@ public class UserViewController implements Initializable{
     
     @FXML private TextField txtName;
     @FXML private TextField txtEmail;
+    @FXML private TextField SearchUser;
 
     
     @FXML private Button CreateButton;
@@ -36,7 +38,7 @@ public class UserViewController implements Initializable{
     @FXML private TableColumn<User, String> NameColumn;
     @FXML private TableColumn<User, String> EmailColumn;
 
-    private ObservableList<User> userList;
+    private ObservableList<User> masterUserList;
 
     private void displayAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -54,8 +56,12 @@ public class UserViewController implements Initializable{
     }
 
     private void refreshTable() {        
-        userList = FXCollections.observableArrayList(userPlugin.getAllUsers());
-        UsersTable.setItems(userList);
+        if(userPlugin == null) {
+            return;
+        }
+        this.masterUserList = FXCollections.observableArrayList(userPlugin.getAllUsers());
+        FilteredList<User> filteredList = new FilteredList<>(masterUserList, p -> true);
+        UsersTable.setItems(filteredList);
     }
 
     private void cleanData() {    
@@ -84,6 +90,20 @@ public class UserViewController implements Initializable{
         EmailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         UsersTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> fillFieldsWithUser(newValue));
+
+        SearchUser.textProperty().addListener((observable, oldValue, newValue) -> {            
+            FilteredList<User> filteredList = (FilteredList<User>) UsersTable.getItems();            
+            
+            filteredList.setPredicate(user -> {                
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                
+                String lowerCaseFilter = newValue.toLowerCase();    
+                
+                return user.getName().toLowerCase().contains(lowerCaseFilter);
+            });
+        });    
         
     }
 

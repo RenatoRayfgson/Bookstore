@@ -16,15 +16,16 @@
             <Button fx:id="CreateButton" layoutX="18.0" layoutY="220.0" mnemonicParsing="false" onAction="#CreateButtonAction" text="Create" />
             <Button fx:id="UpdateButton" layoutX="80.0" layoutY="220.0" mnemonicParsing="false" onAction="#UpdateButtonAction" text="Update" />
             <Button fx:id="DeleteButton" layoutX="145.0" layoutY="220.0" mnemonicParsing="false" onAction="#DeleteButtonAction" text="Delete" />
-            <TableView fx:id="UsersTable" layoutX="219.0" layoutY="36.0" prefHeight="325.0" prefWidth="389.0">
+            <TableView fx:id="UsersTable" layoutX="219.0" layoutY="50.0" prefHeight="325.0" prefWidth="389.0">
               <columns>
                 <TableColumn fx:id="IdColumn" prefWidth="45.0" text="ID" />
-                <TableColumn fx:id="NameColumn" prefWidth="110.0" text="Name" />
-                  <TableColumn fx:id="EmailColumn" prefWidth="180.0" text="Email" />
+                <TableColumn fx:id="NameColumn" prefWidth="131.0" text="Name" />
+                  <TableColumn fx:id="EmailColumn" prefWidth="212.0" text="Email" />
               </columns>
             </TableView>
             <Label layoutX="27.0" layoutY="75.0" text="Name" />
             <Label layoutX="28.0" layoutY="146.0" prefHeight="25.0" prefWidth="32.0" text="Email" />
+            <TextField fx:id="SearchUser" layoutX="219.0" layoutY="25.0" prefHeight="25.0" prefWidth="173.0" promptText="Search by name" />
          </children>
     </AnchorPane>
   </children>

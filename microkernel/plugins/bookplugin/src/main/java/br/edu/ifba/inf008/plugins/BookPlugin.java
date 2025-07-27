@@ -46,7 +46,7 @@ public class BookPlugin implements IPlugin, IBookPlugin {
                 uiController.setMainContent(bookUi);
 
             } catch (IOException ex) {
-                System.err.println("Falha ao carregar a UI do plugin de livro.");
+                System.err.println("Something went wrong while loading the Book UI.");
                 ex.printStackTrace();
             }
         });

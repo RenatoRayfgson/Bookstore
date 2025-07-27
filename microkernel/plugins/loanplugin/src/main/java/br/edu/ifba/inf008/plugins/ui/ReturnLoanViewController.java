@@ -11,6 +11,8 @@ import br.edu.ifba.inf008.interfaces.models.Book.LoanStatus;
 import br.edu.ifba.inf008.interfaces.models.Loan;
 import br.edu.ifba.inf008.interfaces.models.User;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -57,6 +59,8 @@ public class ReturnLoanViewController implements Initializable {
     @FXML private TextField txtLoanID;
     @FXML private TextField txtTitle;
     @FXML private TextField txtClient;
+    @FXML private TextField SearchLoan;
+
     @FXML private Button FinishButton;
 
     @FXML private TableView<LoanDetail> LoanTable;
@@ -65,7 +69,9 @@ public class ReturnLoanViewController implements Initializable {
     @FXML private TableColumn<LoanDetail, String> ClientColumn;
     @FXML private TableColumn<LoanDetail, LoanStatus> StatusColumn;
 
-        private void refreshTable() {
+    private ObservableList<LoanDetail> masterLoanDetailList;
+
+    private void refreshTable() {
         if (loanPlugin == null) return;        
         
         List<Loan> activeLoans = loanPlugin.getActiveLoans();        
@@ -89,7 +95,10 @@ public class ReturnLoanViewController implements Initializable {
             loanDetails.add(new LoanDetail(loan.getLoanId(), clientName, bookTitle, loan.getStatus()));
         }
         
-        LoanTable.setItems(FXCollections.observableArrayList(loanDetails));
+        this.masterLoanDetailList = FXCollections.observableArrayList(loanDetails);
+        FilteredList<LoanDetail> filteredLoans = new FilteredList<>(masterLoanDetailList, p -> true);
+        LoanTable.setItems(filteredLoans);
+        
         clearData();
     }
     
@@ -132,8 +141,24 @@ public class ReturnLoanViewController implements Initializable {
         TitleColumn.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
         ClientColumn.setCellValueFactory(new PropertyValueFactory<>("clientName"));
         StatusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-
+        
         LoanTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> fillFieldsWithSelectedLoan(newValue));
+
+        SearchLoan.textProperty().addListener((observable, oldValue, newValue) -> {
+            FilteredList<LoanDetail> filteredList = (FilteredList<LoanDetail>) LoanTable.getItems();
+            
+            filteredList.setPredicate(loanDetail -> {                
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }                
+                String lowerCaseFilter = newValue.toLowerCase();                
+                
+                String loanIdStr = String.valueOf(loanDetail.getLoanId());                
+                
+                return loanIdStr.startsWith(lowerCaseFilter);
+            });
+        });
+
         txtLoanID.setEditable(false);
         txtTitle.setEditable(false);
         txtClient.setEditable(false);

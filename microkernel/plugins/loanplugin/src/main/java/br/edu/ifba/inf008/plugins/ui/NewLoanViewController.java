@@ -7,6 +7,8 @@ import br.edu.ifba.inf008.interfaces.ILoanPlugin;
 import br.edu.ifba.inf008.interfaces.models.Book;
 import br.edu.ifba.inf008.interfaces.models.User;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,6 +26,8 @@ public class NewLoanViewController implements Initializable {
 
     @FXML private TextField txtName;
     @FXML private TextField txtTitle;
+    @FXML private TextField SearchUser;
+    @FXML private TextField SearchBook;
     
     @FXML private Button RegisterButton;
 
@@ -36,7 +40,9 @@ public class NewLoanViewController implements Initializable {
     @FXML private TableColumn<Book, String> TitleColumn;
     @FXML private TableColumn<Book, Integer> ACColumn;
 
-    
+    private ObservableList<User> masterUserList;
+    private ObservableList<Book> masterBookList;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {        
         
@@ -53,6 +59,40 @@ public class NewLoanViewController implements Initializable {
         txtName.setEditable(false);
         txtTitle.setEditable(false);
         RegisterButton.setDisable(true);
+
+        SearchUser.textProperty().addListener((observable, oldValue, newValue) -> {
+        FilteredList<User> filteredList = (FilteredList<User>) UsersTable.getItems();
+        
+        filteredList.setPredicate(user -> {
+            
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }            
+            String lowerCaseFilter = newValue.toLowerCase();            
+            if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
+                return true;
+            }
+            
+            return false; 
+        });
+        });
+
+        SearchBook.textProperty().addListener((observable, oldValue, newValue) -> {    
+        FilteredList<Book> filteredList = (FilteredList<Book>) BooksTable.getItems();        
+        
+        filteredList.setPredicate(book -> {
+            
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }            
+            String lowerCaseFilter = newValue.toLowerCase();            
+            if (book.getTitle().toLowerCase().contains(lowerCaseFilter)) {
+                return true; 
+            }
+            
+            return false; 
+        });
+        });
     }
 
     public void setPlugin(ILoanPlugin plugin) {
@@ -61,8 +101,14 @@ public class NewLoanViewController implements Initializable {
     }
     
     private void refreshTables() {        
-        UsersTable.setItems(FXCollections.observableArrayList(loanPlugin.getAllUsers()));
-        BooksTable.setItems(FXCollections.observableArrayList(loanPlugin.getAllBooks()));
+        this.masterUserList = FXCollections.observableArrayList(loanPlugin.getAllUsers());
+        FilteredList<User> filteredUsers = new FilteredList<>(masterUserList, p -> true);
+        UsersTable.setItems(filteredUsers);
+
+        this.masterBookList = FXCollections.observableArrayList(loanPlugin.getAllBooks());
+        FilteredList<Book> filteredBooks = new FilteredList<>(masterBookList, p -> true);
+        BooksTable.setItems(filteredBooks);
+        
     }
 
     private void fillFieldsAndCheckReadiness() {

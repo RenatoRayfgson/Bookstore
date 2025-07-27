@@ -46,14 +46,13 @@ public class UserPlugin implements IPlugin, IUserPlugin {
             uiController.setMainContent(userUi);
 
         } catch (IOException ex) {
-            System.err.println("Falha ao carregar a UI do plugin de usuário.");
+            System.err.println("Something went wrong while loading the User Management UI.");
             ex.printStackTrace();
             }
         });
 
         return true;
-    }
-    
+    }    
 
     @Override
     public User addUser(User user) {

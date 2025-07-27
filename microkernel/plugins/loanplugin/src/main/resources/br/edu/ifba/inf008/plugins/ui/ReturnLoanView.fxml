@@ -26,6 +26,7 @@
             <Label layoutX="27.0" layoutY="53.0" text="Loan ID" />
             <Label layoutX="141.0" layoutY="53.0" text="Title " />
             <Label layoutX="412.0" layoutY="53.0" text="Client" />
+            <TextField fx:id="SearchLoan" layoutX="20.0" layoutY="159.0" promptText="Search by ID" />
       </children>
     </AnchorPane>
   </children>

@@ -4,6 +4,7 @@ import br.edu.ifba.inf008.interfaces.IBookPlugin;
 import br.edu.ifba.inf008.interfaces.models.Book;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -18,6 +19,7 @@ public class BookViewController {
 
     private IBookPlugin bookPlugin;
     
+    @FXML private TextField SearchTitle;
     @FXML private TextField txtTitle;
     @FXML private TextField txtIsbn;
     @FXML private TextField txtAuthor;
@@ -34,11 +36,15 @@ public class BookViewController {
     @FXML private TableColumn<Book, String> AuthorColumn;
     @FXML private TableColumn<Book, Integer> AvailableColumn;
 
-    private ObservableList<Book> booksList;
+    private ObservableList<Book> masterBooksList;
 
     private void refreshTable() {
-        booksList = FXCollections.observableArrayList(bookPlugin.getAllBooks());
-        BooksTable.setItems(booksList);
+        if (bookPlugin == null) {
+            return;
+        }
+        this.masterBooksList = FXCollections.observableArrayList(bookPlugin.getAllBooks());
+        FilteredList<Book> filteredList = new FilteredList<>(masterBooksList, p -> true);
+        BooksTable.setItems(filteredList);
     }
 
     private void clearData() {        
@@ -87,11 +93,23 @@ public class BookViewController {
         TitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         AuthorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
         AvailableColumn.setCellValueFactory(new PropertyValueFactory<>("copiesAvailable"));
+        
+        BooksTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> fillFieldsWithSelectedBook(newValue));
 
-        // Adiciona "ouvinte" para cliques na tabela
-        BooksTable.getSelectionModel().selectedItemProperty().addListener(
-            (observable, oldValue, newValue) -> fillFieldsWithSelectedBook(newValue)
-        );
+        SearchTitle.textProperty().addListener((observable, oldValue, newValue) -> {
+            FilteredList<Book> filteredList = (FilteredList<Book>) BooksTable.getItems();
+
+            filteredList.setPredicate(book -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                return book.getTitle().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+    
     }
 
     @FXML
