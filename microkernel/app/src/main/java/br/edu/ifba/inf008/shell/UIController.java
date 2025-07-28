@@ -3,8 +3,10 @@ package br.edu.ifba.inf008.shell;
 import br.edu.ifba.inf008.interfaces.ICore;
 import br.edu.ifba.inf008.interfaces.IUIController;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -42,6 +44,11 @@ public class UIController extends Application implements IUIController
         
         menuBar = new MenuBar();
         mainLayout.setTop(menuBar);
+
+        Label welcomeLabel = new Label("Welcome to the Bookstore");
+        welcomeLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: black;");
+        BorderPane.setAlignment(welcomeLabel, Pos.CENTER);
+        mainLayout.setCenter(welcomeLabel);
 
         Scene scene = new Scene(mainLayout, 960, 600);
 
