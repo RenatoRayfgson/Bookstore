@@ -6,8 +6,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>interfaces</module>
-    <module>app</module>
-    <module>plugins/myplugin</module>
+    <module>app</module>    
     <module>plugins/userplugin</module>
     <module>plugins/bookplugin</module>
     <module>plugins/loanplugin</module>    
