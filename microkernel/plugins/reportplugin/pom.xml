@@ -10,7 +10,7 @@
         <relativePath>../..</relativePath>
     </parent>
 
-    <artifactId>userplugin</artifactId>
+    <artifactId>reportplugin</artifactId>
 
     <dependencies>
         <dependency>
@@ -38,7 +38,7 @@
                 <version>3.2.0</version>
                 <configuration>                    
                     <outputDirectory>${project.basedir}/../</outputDirectory>                    
-                    <finalName>UserPlugin</finalName>
+                    <finalName>ReportPlugin</finalName>
                 </configuration>
             </plugin>
         </plugins>
