@@ -31,16 +31,13 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <!-- Configure maven-jar-plugin -->
+        <plugins>            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
-                <configuration>
-                    <!-- Change the output directory -->
-                    <outputDirectory>${project.basedir}/../</outputDirectory>
-                    <!-- Change the JAR file name -->
+                <configuration>                    
+                    <outputDirectory>${project.basedir}/../</outputDirectory>                    
                     <finalName>BookPlugin</finalName>
                 </configuration>
             </plugin>

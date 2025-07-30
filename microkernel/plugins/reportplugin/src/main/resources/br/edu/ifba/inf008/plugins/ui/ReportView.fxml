@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.inf008.plugins.ui.ReportViewController">
+   <children>
+      <AnchorPane prefHeight="424.0" prefWidth="640.0">
+         <children>
+            <TextField fx:id="txtSearchId" layoutX="14.0" layoutY="51.0" promptText="Search by ID" />
+            <TableView fx:id="ReportTable" layoutX="7.0" layoutY="91.0" prefHeight="301.0" prefWidth="624.0">
+              <columns>
+                <TableColumn fx:id="IdColumn" prefWidth="56.0" text="ID" />
+                <TableColumn fx:id="TitleColumn" prefWidth="167.0" text="Title" />
+                  <TableColumn fx:id="AuthorColumn" prefWidth="142.0" text="Author" />
+                  <TableColumn fx:id="ClientColumn" prefWidth="147.0" text="Client" />
+                  <TableColumn fx:id="DateColumn" prefWidth="111.0" text="Loan Date" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
