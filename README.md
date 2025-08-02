@@ -18,5 +18,5 @@ Link do projeto no github:
 https://github.com/RenatoRayfgson/Bookstore
 
 Link do video com a execução dos comandos e do programa:
-Será adicionado em breve
+https://youtu.be/rTnDQORfL0A
 </div>
